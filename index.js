@@ -2,12 +2,18 @@ const express = require('express');
 const app = express();
 
 const session = require("express-session");
-const MongoStore = require("connect-mongo");
+const MongoStore = require("connect-mongo").default;
 
 app.use(session({
     secret: "passwvarun",
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+    mongoUrl: 'mongodb://127.0.0.1:27017/sessiondb',
+    collectionName: 'mysessions',
+})
+    
+    ,
     cookie: { maxAge: 1000 * 60 * 60 * 24 }
 }));
 
